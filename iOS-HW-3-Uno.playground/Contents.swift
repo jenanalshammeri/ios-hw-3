@@ -35,7 +35,7 @@ import UIKit
  */
 
 
-var blue_5 = UIImage(named: "Blue_6.png")
+var blue_5 = UIImage(named: "Blue_5.png")
 var red_9 = UIImage(named: "Red_9.png")
 
 var green_Skip = UIImage(named: "Green_Skip.png")
@@ -87,7 +87,59 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 
 /// قم بإنشاء الستركت هنا
 
-// struct ...
+struct Card
+{
+    var color: String?
+    var number: Int?
+    var actionCards: String?
+    
+    func imageName()->String
+    {
+        if number != nil
+        {
+            print("\(color!)_\(number!)")
+            return "\(color!)_\(number!)"
+        }
+        else if actionCards! == "Wild" || actionCards! == "Wild_Draw"
+        {
+            return "\(actionCards!)"
+        }
+        else
+        {
+            return "\(color ?? "Red")_\(actionCards!)"
+        }
+    }
+}
+
+var cards: [Card] = []
+let colors = ["Green", "Yellow", "Red", "Blue", "Black"]
+let actionCards = ["Draw", "Skip", "Reverse", "Wild_Draw", "Wild"]
+
+for color in colors
+{
+    cards.append(Card(color: color, number: 0))
+    
+    for _ in 1...2
+    {
+        for action in actionCards
+        {
+            if color == "Black"
+            {
+                cards.append(Card(color: color, actionCards: action))
+            }
+            else
+            {
+                cards.append(Card(color: color, actionCards: action))
+            }
+        }
+        
+        for i in 1...9
+        {
+            cards.append(Card(color: color, number: i))
+        }
+    }
+}
+
 
 
 
@@ -95,11 +147,10 @@ var wild_Draw = UIImage(named: "Wild_Draw.png")
 
 // لا تقم بإزالة الملاحظات إلا عند وصولك للمطلوب الثالث
 
-//
-//let randomCard = cards.randomElement()!
-//let randomCardImage = UIImage(named: randomCard.imageName())
-//
-//
-//let cardImages = cards.map{UIImage(named: $0.imageName())}
-//randomCardImage
-//cardImages
+
+let randomCard = cards.randomElement()!
+let randomCardImage = UIImage(named: randomCard.imageName())
+
+let cardImages = cards.map{UIImage(named: $0.imageName())}
+randomCardImage
+cardImages
